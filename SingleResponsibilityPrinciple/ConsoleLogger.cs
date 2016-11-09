@@ -1,6 +1,7 @@
 ﻿using System;
 
 using SingleResponsibilityPrinciple.Contracts;
+using System.IO;
 
 namespace SingleResponsibilityPrinciple
 {
@@ -8,12 +9,22 @@ namespace SingleResponsibilityPrinciple
     {
         public void LogWarning(string message, params object[] args)
         {
-            Console.WriteLine(string.Concat("WARN: ", message), args);
+            var type = "WARN";
+            Console.WriteLine(string.Concat(type+": ", message), args);
+            using (StreamWriter logfile = File.AppendText("log.xml"))
+            {
+                logfile.WriteLine("<log><type>" + type + "</type><message>" + message + "</message></log>", args);
+            }
         }
 
         public void LogInfo(string message, params object[] args)
         {
-            Console.WriteLine(string.Concat("INFO: ", message), args);
-        }
+            var type = "INFO";
+            Console.WriteLine(string.Concat(type+": ", message), args);
+            using (StreamWriter logfile = File.AppendText("log.xml"))
+            {
+                logfile.WriteLine("<log><type>" + type + "</type><message>" + message + "</message></log>", args);
+            }
+         }
     }
 }
