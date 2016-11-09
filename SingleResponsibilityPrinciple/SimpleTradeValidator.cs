@@ -33,6 +33,12 @@ namespace SingleResponsibilityPrinciple
                 return false;
             }
 
+            if (tradeAmount > 100000 || tradeAmount < 1000)
+            {
+                logger.LogWarning("Trade amount on line {0} outside trade amount bounds (Trade amounts must be between 1,000 and 100,000 units.)", tradeData[1]);
+                return false;
+            }
+
             decimal tradePrice;
             if (!decimal.TryParse(tradeData[2], out tradePrice))
             {
